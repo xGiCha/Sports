@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/gameContainer"
+    android:padding="@dimen/dp_10">
+
+    <TextView
+        android:id="@+id/timerTxtV"
+        android:background="@drawable/white_border"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="@dimen/dp_5"
+        android:textColor="@color/white"
+        tools:text="000000000"/>
+
+    <ImageView
+        android:id="@+id/favoriteImgV"
+        android:layout_width="@dimen/dp_32"
+        android:layout_height="@dimen/dp_32"
+        android:src="@drawable/ic_star_empty"
+        android:layout_marginTop="@dimen/dp_8"
+        app:layout_constraintEnd_toEndOf="@+id/timerTxtV"
+        app:layout_constraintStart_toStartOf="@+id/timerTxtV"
+        app:layout_constraintTop_toBottomOf="@+id/timerTxtV" />
+
+    <TextView
+        android:id="@+id/teamOneTxtV"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:padding="@dimen/dp_5"
+        tools:text="000000000"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="@dimen/sp_12"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favoriteImgV" />
+
+    <TextView
+        android:id="@+id/teamtwoTxtV"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/dp_5"
+        android:paddingHorizontal="@dimen/dp_5"
+        tools:text="000000000"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textSize="@dimen/sp_12"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teamOneTxtV" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
