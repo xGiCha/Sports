@@ -55,16 +55,9 @@ class SportsFragment : Fragment() {
         binding.sportsRV.adapter = adapter
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     private fun setUpObservers() {
         sportsViewModel.sportsList.observe(viewLifecycleOwner) { sportsList ->
-            adapter.submitList(sportsList)
-        }
-
-        sportsViewModel.sportsListExtra.observe(viewLifecycleOwner) { sportsList ->
-//            adapter.submitList(sportsList.map { it.copy() })
-            adapter.submitList(sportsList)
-            adapter.notifyDataSetChanged()
+            adapter.submitList(sportsList.map { it.copy() })
         }
     }
 

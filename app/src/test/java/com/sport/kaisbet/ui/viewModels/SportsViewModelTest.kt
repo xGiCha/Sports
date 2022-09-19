@@ -147,7 +147,7 @@ class SportsViewModelTest {
          * THEN
          * */
         assertEquals(
-            viewModel.sportsListExtra.value,
+            viewModel.sportsList.value,
             sportList
         )
     }
@@ -176,7 +176,7 @@ class SportsViewModelTest {
          * THEN
          * */
         assertEquals(
-            viewModel.sportsListExtra.value,
+            viewModel.sportsList.value,
             dummySportListSecond
         )
     }
@@ -205,7 +205,7 @@ class SportsViewModelTest {
          * THEN
          * */
         assertEquals(
-            viewModel.sportsListExtra.value,
+            viewModel.sportsList.value,
             dummySportListFavorite
         )
     }
@@ -234,7 +234,7 @@ class SportsViewModelTest {
          * THEN
          * */
         assertEquals(
-            viewModel.sportsListExtra.value,
+            viewModel.sportsList.value,
             dummySportListUnFavorite
         )
     }

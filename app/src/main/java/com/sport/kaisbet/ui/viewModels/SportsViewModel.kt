@@ -21,9 +21,6 @@ class SportsViewModel @Inject constructor(
     private val _sportsList = MutableLiveData<List<Sport>>()
     val sportsList: LiveData<List<Sport>> = _sportsList
 
-    private val _sportsListExtra = MutableLiveData<List<Sport>>()
-    val sportsListExtra: LiveData<List<Sport>> = _sportsListExtra
-
     fun fetchSportsList() {
         viewModelScope.launch {
             kotlin.runCatching {
@@ -39,33 +36,30 @@ class SportsViewModel @Inject constructor(
     fun checkCollapsedProperty(isCollapsed: Boolean, position: Int) {
         val sportCollapsedArrayList = _sportsList.value
         sportCollapsedArrayList?.get(position)?.isCollapsed = isCollapsed
-        _sportsListExtra.postValue(sportCollapsedArrayList)
+        _sportsList.postValue(sportCollapsedArrayList)
     }
 
     fun checkFavoriteProperty(hasFavorite: Boolean, event: Event) {
         var sportEventArrayList: MutableList<Event>
-        val sportFavoriteArrayList = getSportFavoriteList()
+        val sportFavoriteArrayList = _sportsList.value?.toMutableList()
 
         sportFavoriteArrayList?.forEach { sport ->
-            sport.eventList.forEachIndexed { indexEvent, eventL ->
-                if (event != eventL) return@forEachIndexed
-                eventL.hasFavorite = hasFavorite
-                sportEventArrayList = sport.eventList.toMutableList()
+            sport.eventList.forEachIndexed { indexEvent, eventItem ->
+                if (event != eventItem) return@forEachIndexed
+                val newEvent = eventItem.copy()
+                newEvent.hasFavorite = hasFavorite
+                sportEventArrayList = sport.eventList.map { it.copy() }.toMutableList()
 
                 apply{
                     sportEventArrayList.removeAt(indexEvent)
-                    sportEventArrayList.add(0, eventL)
+                    sportEventArrayList.add(0, newEvent)
                 }.takeIf { hasFavorite } ?: sportEventArrayList.sortByDescending { it.hasFavorite }
 
                 sport.eventList = sportEventArrayList
             }
         }
 
-        _sportsListExtra.postValue(sportFavoriteArrayList)
+        _sportsList.postValue(sportFavoriteArrayList)
     }
-
-    private fun getSportFavoriteList() =
-        _sportsList.value?.toMutableList().takeIf { _sportsListExtra.value.isNullOrEmpty() }
-        ?: _sportsListExtra.value?.toMutableList()
 
 }
