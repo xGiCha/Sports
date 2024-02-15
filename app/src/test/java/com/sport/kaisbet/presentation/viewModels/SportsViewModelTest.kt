@@ -1,11 +1,11 @@
-package com.sport.kaisbet.ui.viewModels
+package com.sport.kaisbet.presentation.viewModels
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.sport.kaisbet.domain.entities.SportsEntity
 import com.sport.kaisbet.domain.models.Event
 import com.sport.kaisbet.domain.models.Sport
 import com.sport.kaisbet.domain.repo.SportRemoteRepositoryImpl
-import com.sport.kaisbet.ui.mappers.SportsMapper
+import com.sport.kaisbet.presentation.mappers.SportsMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher

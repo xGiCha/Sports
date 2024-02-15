@@ -1,9 +1,9 @@
-package com.sport.kaisbet.ui.activities
+package com.sport.kaisbet.presentation.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.sport.kaisbet.R
-import com.sport.kaisbet.ui.fragments.SportsFragment
+import com.sport.kaisbet.presentation.fragments.SportsFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -8,8 +8,6 @@ data class EventEntity(
     val d: String,
     @SerializedName("i")
     val i: String,
-    @SerializedName("sh")
-    val sh: String,
     @SerializedName("si")
     val si: String,
     @SerializedName("tt")

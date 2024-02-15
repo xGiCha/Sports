@@ -1,4 +1,4 @@
-package com.sport.kaisbet.ui.mappers
+package com.sport.kaisbet.presentation.mappers
 
 import com.sport.kaisbet.domain.entities.SportsEntity
 import com.sport.kaisbet.domain.models.Sport

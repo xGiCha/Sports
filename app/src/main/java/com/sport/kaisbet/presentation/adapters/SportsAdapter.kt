@@ -1,10 +1,11 @@
-package com.sport.kaisbet.ui.adapters
+package com.sport.kaisbet.presentation.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -58,7 +59,7 @@ class SportsAdapter(
             adapter = EventAdapter { hasFavorite, event ->
                 callBackEvent.invoke(hasFavorite, event)
             }
-            binding.sportItemRV.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            binding.sportItemRV.layoutManager = GridLayoutManager(context, 4)
             binding.sportItemRV.adapter = adapter
             adapter.submitList(item.eventList)
         }

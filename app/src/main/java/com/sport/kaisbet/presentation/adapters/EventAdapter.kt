@@ -1,4 +1,4 @@
-package com.sport.kaisbet.ui.adapters
+package com.sport.kaisbet.presentation.adapters
 
 import android.os.CountDownTimer
 import android.view.LayoutInflater
@@ -46,21 +46,23 @@ class EventAdapter(
     inner class ViewHolder(val binding: LayoutEventItemBinding) : RecyclerView.ViewHolder(binding.root) {
         var timer: CountDownTimer? = null
         fun bind(item: Event, position: Int) {
+            binding.apply {
+                teamOneTxtV.text = item.eventName
+                teamtwoTxtV.text = item.eventSubName
+                vsTxtV.text = binding.root.context.getString(R.string.vs)
 
-            binding.teamOneTxtV.text = item.eventName
-            binding.teamtwoTxtV.text = item.eventSubName
-
-            if(item.hasFavorite){
-                binding.favoriteImgV.setBackgroundResource(R.drawable.ic_star_yellow)
-            }else{
-                binding.favoriteImgV.setBackgroundResource(R.drawable.ic_star_empty)
-            }
-
-            binding.gameContainer.setOnClickListener {
                 if(item.hasFavorite){
-                    callbackEvent.invoke(false, item)
+                    favoriteImgV.setBackgroundResource(R.drawable.ic_star_yellow)
                 }else{
-                    callbackEvent.invoke(true, item)
+                    favoriteImgV.setBackgroundResource(R.drawable.ic_star_empty)
+                }
+
+                gameContainer.setOnClickListener {
+                    if(item.hasFavorite){
+                        callbackEvent.invoke(false, item)
+                    }else{
+                        callbackEvent.invoke(true, item)
+                    }
                 }
             }
         }

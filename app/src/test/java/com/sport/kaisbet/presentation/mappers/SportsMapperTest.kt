@@ -1,4 +1,4 @@
-package com.sport.kaisbet.ui.mappers
+package com.sport.kaisbet.presentation.mappers
 
 import com.sport.kaisbet.domain.entities.EventEntity
 import com.sport.kaisbet.domain.entities.SportEntity
@@ -8,7 +8,6 @@ import com.sport.kaisbet.domain.models.Sport
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import org.mockito.Mock
 import org.mockito.MockitoAnnotations
 
 class SportsMapperTest {
@@ -78,8 +77,7 @@ class SportsMapperTest {
                     d = "Medeama SC - Dreams FC",
                     i = "24456069",
                     si = "FOOT",
-                    tt = 1668925680,
-                    sh = ""
+                    tt = 1668925680
                 )
             )
         ),
@@ -91,8 +89,7 @@ class SportsMapperTest {
                     d = "Abahani Chittagong - Mohammedan SC",
                     i = "24456069",
                     si = "FOOT",
-                    tt = 1668925680,
-                    sh = ""
+                    tt = 1668925680
                 )
             )
         )

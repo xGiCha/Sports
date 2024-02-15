@@ -1,4 +1,4 @@
-package com.sport.kaisbet.ui.viewModels
+package com.sport.kaisbet.presentation.viewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.sport.kaisbet.domain.models.Event
 import com.sport.kaisbet.domain.models.Sport
 import com.sport.kaisbet.domain.repo.SportRemoteRepositoryImpl
-import com.sport.kaisbet.ui.mappers.SportsMapper
+import com.sport.kaisbet.presentation.mappers.SportsMapper
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -34,16 +34,16 @@ class SportsViewModel @Inject constructor(
     }
 
     fun checkCollapsedProperty(isCollapsed: Boolean, position: Int) {
-        val sportCollapsedArrayList = _sportsList.value
-        sportCollapsedArrayList?.get(position)?.isCollapsed = isCollapsed
+        val sportCollapsedArrayList = _sportsList.value ?: emptyList()
+        sportCollapsedArrayList.get(position).isCollapsed = isCollapsed
         _sportsList.postValue(sportCollapsedArrayList)
     }
 
     fun checkFavoriteProperty(hasFavorite: Boolean, event: Event) {
         var sportEventArrayList: MutableList<Event>
-        val sportFavoriteArrayList = _sportsList.value?.toMutableList()
+        val sportFavoriteArrayList = _sportsList.value?.toMutableList() ?: mutableListOf()
 
-        sportFavoriteArrayList?.forEach { sport ->
+        sportFavoriteArrayList.forEach { sport ->
             sport.eventList.forEachIndexed { indexEvent, eventItem ->
                 if (event != eventItem) return@forEachIndexed
                 val newEvent = eventItem.copy()

@@ -1,6 +1,5 @@
-package com.sport.kaisbet.ui.fragments
+package com.sport.kaisbet.presentation.fragments
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,9 +8,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sport.kaisbet.databinding.FragmentSportsLayoutBinding
-import com.sport.kaisbet.ui.adapters.SportsAdapter
-import com.sport.kaisbet.ui.viewModels.SportsViewModel
-import okhttp3.internal.toImmutableList
+import com.sport.kaisbet.presentation.adapters.SportsAdapter
+import com.sport.kaisbet.presentation.viewModels.SportsViewModel
 
 class SportsFragment : Fragment() {
 
