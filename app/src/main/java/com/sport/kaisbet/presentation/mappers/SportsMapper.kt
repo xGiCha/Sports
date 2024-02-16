@@ -3,16 +3,16 @@ package com.sport.kaisbet.presentation.mappers
 import com.sport.kaisbet.domain.entities.EventEntity
 import com.sport.kaisbet.domain.entities.SportsEntity
 import com.sport.kaisbet.domain.models.Event
-import com.sport.kaisbet.domain.models.Sport
-import com.sport.kaisbet.units.splitEventName
+import com.sport.kaisbet.domain.models.SportUi
+import com.sport.kaisbet.common.splitEventName
 import javax.inject.Inject
 
 class SportsMapper @Inject constructor() : SportsMapperInterface {
 
-    override fun mapSports(sports: SportsEntity): List<Sport> {
-        val sportsArrayList = arrayListOf<Sport>()
+    override fun mapSports(sports: SportsEntity): List<SportUi> {
+        val sportsArrayList = arrayListOf<SportUi>()
         sports.forEach { sportEntity ->
-            val sport = Sport(
+            val sport = SportUi(
                 sportId = sportEntity.i,
                 sportName = sportEntity.d,
                 eventList = mapEventEntity(sportEntity.e)

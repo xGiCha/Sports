@@ -1,17 +1,18 @@
 package com.sport.kaisbet.domain.models
 
 
-data class Sport(
+data class SportUi(
     val sportName: String,
     var eventList: List<Event>,
     val sportId: String,
-    var isCollapsed : Boolean = false
+    var isCollapsed : Boolean = false,
+    var switchState: Boolean = false
 ) {
     override fun equals(other: Any?): Boolean {
         if(javaClass != other?.javaClass)
             return false
 
-        other as Sport
+        other as SportUi
 
         return when {
             sportName != other.sportName -> false

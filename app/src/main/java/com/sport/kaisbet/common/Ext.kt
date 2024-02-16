@@ -1,4 +1,4 @@
-package com.sport.kaisbet.units
+package com.sport.kaisbet.common
 
 import java.text.SimpleDateFormat
 import java.util.*

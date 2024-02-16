@@ -1,65 +1,84 @@
 package com.sport.kaisbet.presentation.viewModels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sport.kaisbet.common.Resource
 import com.sport.kaisbet.domain.models.Event
-import com.sport.kaisbet.domain.models.Sport
-import com.sport.kaisbet.domain.repo.SportRemoteRepositoryImpl
-import com.sport.kaisbet.presentation.mappers.SportsMapper
+import com.sport.kaisbet.domain.models.SportUi
+import com.sport.kaisbet.domain.useCases.FavoriteHandlerUseCase
+import com.sport.kaisbet.domain.useCases.SportsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class SportsViewModel @Inject constructor(
-    private val repository: SportRemoteRepositoryImpl,
-    private val sportsMapper: SportsMapper
+    private val sportsUseCase: SportsUseCase,
+    private val favoriteHandlerUseCase: FavoriteHandlerUseCase
 ) : ViewModel() {
 
-    private val _sportsList = MutableLiveData<List<Sport>>()
-    val sportsList: LiveData<List<Sport>> = _sportsList
+    private val _sportsList = MutableSharedFlow<List<SportUi>>()
+    val sportsList: SharedFlow<List<SportUi>> = _sportsList
+    private val _loader = MutableStateFlow(false)
+    val loader: StateFlow<Boolean> = _loader
+    lateinit var _localList: List<SportUi>
+
+    init {
+        fetchSportsList()
+    }
 
     fun fetchSportsList() {
         viewModelScope.launch {
-            kotlin.runCatching {
-                repository.getSports()
-            }.onFailure {
-                it.printStackTrace()
-            }.onSuccess {
-                _sportsList.postValue(sportsMapper.mapSports(it))
+            sportsUseCase.fetchSports().collectLatest {
+                when (it) {
+                    is Resource.Success -> {
+                        displayData(it.data ?: emptyList())
+                        displayLoader(false)
+                    }
+                    is Resource.Loading -> {
+                        displayLoader(true)
+                    }
+                    else -> {
+                        displayData(emptyList())
+                        displayLoader(false)
+                    }
+                }
             }
         }
     }
 
     fun checkCollapsedProperty(isCollapsed: Boolean, position: Int) {
-        val sportCollapsedArrayList = _sportsList.value ?: emptyList()
+        val sportCollapsedArrayList = _localList
         sportCollapsedArrayList.get(position).isCollapsed = isCollapsed
-        _sportsList.postValue(sportCollapsedArrayList)
+        displayData(sportCollapsedArrayList)
     }
 
-    fun checkFavoriteProperty(hasFavorite: Boolean, event: Event) {
-        var sportEventArrayList: MutableList<Event>
-        val sportFavoriteArrayList = _sportsList.value?.toMutableList() ?: mutableListOf()
+    fun handleFavoriteSingleStar(hasFavorite: Boolean, event: Event) {
+        val list = favoriteHandlerUseCase.addSingleStartToFavorite(hasFavorite, event, _localList.toMutableList())
+        displayData(list)
+    }
 
-        sportFavoriteArrayList.forEach { sport ->
-            sport.eventList.forEachIndexed { indexEvent, eventItem ->
-                if (event != eventItem) return@forEachIndexed
-                val newEvent = eventItem.copy()
-                newEvent.hasFavorite = hasFavorite
-                sportEventArrayList = sport.eventList.map { it.copy() }.toMutableList()
+    fun handleFavoriteAllStars(switchState: Boolean, sportUi: SportUi) {
+        val list = favoriteHandlerUseCase.addAllStarsToFavorites(switchState, sportUi, _localList.toMutableList())
+        displayData(list)
+    }
 
-                apply{
-                    sportEventArrayList.removeAt(indexEvent)
-                    sportEventArrayList.add(0, newEvent)
-                }.takeIf { hasFavorite } ?: sportEventArrayList.sortByDescending { it.hasFavorite }
-
-                sport.eventList = sportEventArrayList
-            }
+    private fun displayData(list: List<SportUi>) {
+        _localList = list
+        viewModelScope.launch {
+            _sportsList.emit(list)
         }
+    }
 
-        _sportsList.postValue(sportFavoriteArrayList)
+    private fun displayLoader(state: Boolean) {
+        viewModelScope.launch {
+            _loader.emit(state)
+        }
     }
 
 }

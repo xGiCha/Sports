@@ -3,7 +3,7 @@ package com.sport.kaisbet.presentation.viewModels
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.sport.kaisbet.domain.entities.SportsEntity
 import com.sport.kaisbet.domain.models.Event
-import com.sport.kaisbet.domain.models.Sport
+import com.sport.kaisbet.domain.models.SportUi
 import com.sport.kaisbet.domain.repo.SportRemoteRepositoryImpl
 import com.sport.kaisbet.presentation.mappers.SportsMapper
 import kotlinx.coroutines.Dispatchers
@@ -243,7 +243,7 @@ class SportsViewModelTest {
     val dummySportsEntityList = SportsEntity()
 
     val dummySportList = listOf(
-        Sport(
+        SportUi(
             sportName = "SOCCER",
             sportId = "FOOT",
             eventList = listOf(
@@ -265,7 +265,7 @@ class SportsViewModelTest {
             ),
             isCollapsed = true
         ),
-        Sport(
+        SportUi(
             sportName = "BASKETBALL",
             sportId = "BASK",
             eventList = listOf(
@@ -282,7 +282,7 @@ class SportsViewModelTest {
     )
 
     val dummySportListSecond = listOf(
-        Sport(
+        SportUi(
             sportName = "SOCCER",
             sportId = "FOOT",
             eventList = listOf(
@@ -304,7 +304,7 @@ class SportsViewModelTest {
             ),
             isCollapsed = false
         ),
-        Sport(
+        SportUi(
             sportName = "BASKETBALL",
             sportId = "BASK",
             eventList = listOf(
@@ -321,7 +321,7 @@ class SportsViewModelTest {
     )
 
     val dummySportListFavorite = listOf(
-        Sport(
+        SportUi(
             sportName = "SOCCER",
             sportId = "FOOT",
             eventList = listOf(
@@ -343,7 +343,7 @@ class SportsViewModelTest {
             ),
             isCollapsed = true
         ),
-        Sport(
+        SportUi(
             sportName = "BASKETBALL",
             sportId = "BASK",
             eventList = listOf(
@@ -359,7 +359,7 @@ class SportsViewModelTest {
     )
 
     val dummySportListUnFavorite = listOf(
-        Sport(
+        SportUi(
             sportName = "SOCCER",
             sportId = "FOOT",
             eventList = listOf(
@@ -381,7 +381,7 @@ class SportsViewModelTest {
             ),
             isCollapsed = true
         ),
-        Sport(
+        SportUi(
             sportName = "BASKETBALL",
             sportId = "BASK",
             eventList = listOf(

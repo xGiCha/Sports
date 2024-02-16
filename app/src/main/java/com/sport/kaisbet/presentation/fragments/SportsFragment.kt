@@ -5,11 +5,16 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.sport.kaisbet.databinding.FragmentSportsLayoutBinding
 import com.sport.kaisbet.presentation.adapters.SportsAdapter
 import com.sport.kaisbet.presentation.viewModels.SportsViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class SportsFragment : Fragment() {
 
@@ -41,21 +46,40 @@ class SportsFragment : Fragment() {
     }
 
     private fun initViews() {
-        sportsViewModel.fetchSportsList()
-
-        // setup adapter
-        adapter = SportsAdapter(requireContext(), { isCollapsed, position ->
+        adapter = SportsAdapter({ isCollapsed, position ->
             sportsViewModel.checkCollapsedProperty(isCollapsed, position)
         }, { hasFavorite, event ->
-            sportsViewModel.checkFavoriteProperty(hasFavorite, event)
+            sportsViewModel.handleFavoriteSingleStar(hasFavorite, event)
+        },{ switchState, sportUi ->
+            sportsViewModel.handleFavoriteAllStars(switchState, sportUi)
         })
         binding.sportsRV.layoutManager = LinearLayoutManager(requireContext())
         binding.sportsRV.adapter = adapter
     }
 
     private fun setUpObservers() {
-        sportsViewModel.sportsList.observe(viewLifecycleOwner) { sportsList ->
-            adapter.submitList(sportsList.map { it.copy() })
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                sportsViewModel.sportsList.collectLatest { sportsList ->
+                    if (sportsList.isNotEmpty()) {
+                        adapter.submitList(sportsList.map { it.copy() })
+                        binding.errorTxtV.visibility = View.GONE
+                        binding.sportsRV.visibility = View.VISIBLE
+                    } else {
+                        binding.errorTxtV.visibility = View.VISIBLE
+                        binding.sportsRV.visibility = View.GONE
+                    }
+
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                sportsViewModel.loader.collectLatest { state ->
+                    binding.progressView.visibility = View.VISIBLE.takeIf { state } ?: View.GONE
+                }
+            }
         }
     }
 

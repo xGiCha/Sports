@@ -10,4 +10,5 @@
 
     <dimen name="sp_8">8sp</dimen>
     <dimen name="sp_12">12sp</dimen>
+    <dimen name="sp_24">24sp</dimen>
 </resources>

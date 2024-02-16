@@ -1,7 +1,7 @@
 package com.sport.kaisbet.di
 
 import com.sport.kaisbet.data.networkServices.SportsApi
-import com.sport.kaisbet.units.Constants.Companion.BASE_URL
+import com.sport.kaisbet.common.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

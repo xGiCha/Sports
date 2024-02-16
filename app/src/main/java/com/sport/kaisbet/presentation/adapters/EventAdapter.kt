@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sport.kaisbet.R
 import com.sport.kaisbet.databinding.LayoutEventItemBinding
 import com.sport.kaisbet.domain.models.Event
-import com.sport.kaisbet.units.timeStampToTime
+import com.sport.kaisbet.common.timeStampToTime
 
 class EventAdapter(
     val callbackEvent: (hasFavorite: Boolean, event: Event) -> Unit
@@ -50,26 +50,15 @@ class EventAdapter(
                 teamOneTxtV.text = item.eventName
                 teamtwoTxtV.text = item.eventSubName
                 vsTxtV.text = binding.root.context.getString(R.string.vs)
-
-                if(item.hasFavorite){
-                    favoriteImgV.setBackgroundResource(R.drawable.ic_star_yellow)
-                }else{
-                    favoriteImgV.setBackgroundResource(R.drawable.ic_star_empty)
-                }
-
+                favoriteImgV.setBackgroundResource(R.drawable.ic_star_yellow.takeIf { item.hasFavorite } ?: R.drawable.ic_star_empty)
                 gameContainer.setOnClickListener {
-                    if(item.hasFavorite){
-                        callbackEvent.invoke(false, item)
-                    }else{
-                        callbackEvent.invoke(true, item)
-                    }
+                    callbackEvent.invoke(false.takeIf { item.hasFavorite } ?: true, item)
                 }
             }
         }
     }
 
     class DiffCallback : DiffUtil.ItemCallback<Event>() {
-        // your DiffCallback implementation
         override fun areItemsTheSame(oldItem: Event, newItem: Event): Boolean {
             return oldItem.eventId == newItem.eventId && oldItem.hasFavorite == newItem.hasFavorite
         }

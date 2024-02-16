@@ -4,7 +4,7 @@ import com.sport.kaisbet.domain.entities.EventEntity
 import com.sport.kaisbet.domain.entities.SportEntity
 import com.sport.kaisbet.domain.entities.SportsEntity
 import com.sport.kaisbet.domain.models.Event
-import com.sport.kaisbet.domain.models.Sport
+import com.sport.kaisbet.domain.models.SportUi
 import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
@@ -26,7 +26,7 @@ class SportsMapperTest {
         /**
          * GIVEN
          * */
-        val expected = arrayListOf<Sport>()
+        val expected = arrayListOf<SportUi>()
 
         /**
          * WHEN
@@ -96,7 +96,7 @@ class SportsMapperTest {
     )
 
     val dummySportList = listOf(
-        Sport(
+        SportUi(
             sportName = "SOCCER",
             sportId = "FOOT",
             eventList = listOf(
@@ -109,7 +109,7 @@ class SportsMapperTest {
                 )
             )
         ),
-        Sport(
+        SportUi(
             sportName = "BASKETBALL",
             sportId = "BASK",
             eventList = listOf(
