@@ -45,6 +45,24 @@ class FavoriteHandlerHelper @Inject constructor(
         return list
     }
 
+    override fun compareNetworkWithDbFavorite(
+        networkList: List<SportUi>,
+        dbList: List<SportUi>
+    ): List<SportUi> {
+        return if (dbList.isNotEmpty()) {
+            networkList.map { networkSport ->
+                val dbSport = dbList.find { it.sportId == networkSport.sportId }
+                mergeSportUi(networkSport, dbSport)
+            }
+        } else {
+            networkList
+        }
+    }
+
+    override fun fetchFavoriteFromDb(): Flow<List<SportsEntity>> {
+        return localDataSource.getSportsList()
+    }
+
     private fun updateEventsWithSingleFavorite(
         hasFavorite: Boolean,
         event: Event,
@@ -81,24 +99,6 @@ class FavoriteHandlerHelper @Inject constructor(
         updatedEvents: List<Event>
     ): SportUi {
         return sportUi.copy(switchState = state, eventList = updatedEvents.toMutableList())
-    }
-
-    override fun fetchFavoriteFromDb(): Flow<List<SportsEntity>> {
-        return localDataSource.getSportsList()
-    }
-
-    override fun compareNetworkWithDbFavorite(
-        networkList: List<SportUi>,
-        dbList: List<SportUi>
-    ): List<SportUi> {
-        return if (dbList.isNotEmpty()) {
-            networkList.map { networkSport ->
-                val dbSport = dbList.find { it.sportId == networkSport.sportId }
-                mergeSportUi(networkSport, dbSport)
-            }
-        } else {
-            networkList
-        }
     }
 
     private fun mergeSportUi(networkSport: SportUi, dbSport: SportUi?): SportUi {

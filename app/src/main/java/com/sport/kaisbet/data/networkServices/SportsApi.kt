@@ -7,7 +7,7 @@ import retrofit2.http.GET
 interface SportsApi {
 
 //    @GET("/api/sports")
-    @GET("Http://192.168.2.2:8068/api/sports")
+    @GET("Http://192.168.1.254:8068/api/sports")
     suspend fun getSports(): SportsEntity
 
 }
