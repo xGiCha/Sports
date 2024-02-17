@@ -25,8 +25,8 @@ class SportsViewModel @Inject constructor(
     private val favoriteHandlerUseCase: FavoriteHandlerHelperInterface
 ) : ViewModel() {
 
-    private val _sportsList = MutableSharedFlow<List<SportUi>>()
-    val sportsList: SharedFlow<List<SportUi>> = _sportsList
+    private val _sportsList = MutableStateFlow<List<SportUi>>(emptyList())
+    val sportsList: StateFlow<List<SportUi>> = _sportsList
     private val _loader = MutableStateFlow(false)
     val loader: StateFlow<Boolean> = _loader
     private val _showError = MutableStateFlow(false)
@@ -34,16 +34,18 @@ class SportsViewModel @Inject constructor(
     lateinit var _localList: List<SportUi>
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            favoriteHandlerUseCase.fetchFavoriteFromDb().collectLatest { sportsEntityList ->
-                fetchSportsList(sportsEntityList)
-
-            }
-        }
-//        fetchSportsList()
+        initSportList()
     }
 
-    fun fetchSportsList(dbFavoriteList: List<SportsEntity>) {
+    fun initSportList() {
+        viewModelScope.launch {
+            favoriteHandlerUseCase.fetchFavoriteFromDb().collectLatest { sportsEntityList ->
+                fetchSportsList(sportsEntityList)
+            }
+        }
+    }
+
+    private fun fetchSportsList(dbFavoriteList: List<SportsEntity>) {
         viewModelScope.launch {
             sportsUseCase.fetchSports().collectLatest {
                 when (it) {

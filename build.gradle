@@ -5,7 +5,7 @@ buildscript {
     ext.coreTestingVersion = '2.1.0'
     ext.mockitoKotlinVersion = '4.0.0'
     ext.mockitoAndroidVersion = '4.0.0'
-    ext.coroutineTestVersion = '1.6.0'
+    ext.coroutineTestVersion = '1.6.1'
     repositories {
         google()
         jcenter()

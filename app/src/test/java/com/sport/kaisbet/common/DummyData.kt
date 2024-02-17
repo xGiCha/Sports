@@ -49,6 +49,14 @@ object DummyData {
         eventList = listOf(dummyEvent, dummyEventExtra)
     )
 
+    val dummySportUiCollapsed = SportUi(
+        sportId = "FOOT",
+        sportName = "SOCCER",
+        isCollapsed = true,
+        switchState = false,
+        eventList = listOf(dummyEvent, dummyEventExtra)
+    )
+
     val dummySportUiSwitchState = SportUi(
         sportId = "FOOT",
         sportName = "SOCCER",
@@ -69,6 +77,17 @@ object DummyData {
         id = "FOOT",
         sportsUi = dummySportUi
     )
+    val dummyEventEntityNetwork = com.sport.kaisbet.domain.entities.EventEntity(
+        d = "Millwall FC U21 - AFC Bournemouth U21",
+        i = "40283433",
+        si = "FOOT",
+        tt = 1703364840
+    )
 
+    val dummySportEntityNetwork = com.sport.kaisbet.domain.entities.SportEntity(
+        d = "SOCCER",
+        i = "FOOT",
+        e = listOf(dummyEventEntityNetwork)
+    )
 
 }

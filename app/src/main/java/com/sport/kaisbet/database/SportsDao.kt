@@ -13,9 +13,6 @@ interface SportsDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertSportItem(sportsEntity: SportsEntity)
 
-//    @Query("SELECT * FROM movies_table ORDER BY id ASC")
-//    fun readMovies(): Flow<List<Movie>>
-
     @Query("SELECT * FROM sports_table")
     fun getSportsList(): Flow<List<SportsEntity>>
 
