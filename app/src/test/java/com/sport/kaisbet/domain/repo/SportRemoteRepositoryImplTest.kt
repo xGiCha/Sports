@@ -1,6 +1,7 @@
 package com.sport.kaisbet.domain.repo
 
 import com.sport.kaisbet.data.networkServices.SportsApi
+import com.sport.kaisbet.data.repo.SportRemoteRepositoryImpl
 import com.sport.kaisbet.domain.entities.SportsEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

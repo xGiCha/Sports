@@ -17,7 +17,6 @@ class SportsViewHolder(
 ) : RecyclerView.ViewHolder(binding.root) {
 
     private lateinit var adapter: EventAdapter
-    private var startClicked = false
 
     init {
        initAdapter()
@@ -26,7 +25,7 @@ class SportsViewHolder(
     fun bind(item: SportUi, position: Int) {
         binding.apply {
             sportBarTitleTxtV.text = item.sportName
-            switchV.isChecked = item.switchState
+
             sportItemRV.visibility = View.GONE.takeIf { item.isCollapsed } ?: View.VISIBLE
             sportIcon.setBackgroundResource(R.drawable.ic_arrow_down.takeIf { item.isCollapsed } ?: R.drawable.ic_arrow_up)
 
@@ -35,10 +34,11 @@ class SportsViewHolder(
             }
 
             switchV.setOnCheckedChangeListener { compoundButton, isChecked ->
-                if(!startClicked)
+                if (switchV.isChecked != item.switchState)
                     callBackSwitch.invoke(isChecked, item)
-                startClicked = false
+
             }
+            switchV.isChecked = item.switchState
             adapter.submitList(item.eventList)
         }
     }
@@ -47,7 +47,6 @@ class SportsViewHolder(
         binding.apply {
             adapter = EventAdapter { hasFavorite, event ->
                 callBackEvent.invoke(hasFavorite, event)
-                startClicked = true
             }
             sportItemRV.layoutManager = GridLayoutManager(root.context, 4)
 //            sportItemRV.layoutManager = LinearLayoutManager(root.context, LinearLayoutManager.HORIZONTAL, false)

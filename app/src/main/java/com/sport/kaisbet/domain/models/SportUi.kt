@@ -6,7 +6,7 @@ data class SportUi(
     var eventList: List<Event>,
     val sportId: String,
     var isCollapsed : Boolean = false,
-    var switchState: Boolean = false
+    val switchState: Boolean = false
 ) {
     override fun equals(other: Any?): Boolean {
         if(javaClass != other?.javaClass)

@@ -1,5 +1,7 @@
 package com.sport.kaisbet.common
 
+import com.sport.kaisbet.database.SportsEntity
+import com.sport.kaisbet.domain.models.SportUi
 import java.text.SimpleDateFormat
 import java.util.*
 

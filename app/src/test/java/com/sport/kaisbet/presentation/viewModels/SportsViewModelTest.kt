@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.sport.kaisbet.domain.entities.SportsEntity
 import com.sport.kaisbet.domain.models.Event
 import com.sport.kaisbet.domain.models.SportUi
-import com.sport.kaisbet.domain.repo.SportRemoteRepositoryImpl
+import com.sport.kaisbet.data.repo.SportRemoteRepositoryImpl
 import com.sport.kaisbet.presentation.mappers.SportsMapper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -66,7 +66,7 @@ class SportsViewModelTest {
         viewModel.sportsList.observeForever {
             assert(it != null)
         }
-        viewModel.fetchSportsList()
+        viewModel.fetchSportsList(sportsEntityList.isEmpty())
 
         /**
          * THEN
@@ -92,7 +92,7 @@ class SportsViewModelTest {
         viewModel.sportsList.observeForever {
             assert(it != null)
         }
-        viewModel.fetchSportsList()
+        viewModel.fetchSportsList(sportsEntityList.isEmpty())
 
         /**
          * THEN
@@ -113,7 +113,7 @@ class SportsViewModelTest {
         viewModel.sportsList.observeForever {
             assert(it != null)
         }
-        viewModel.fetchSportsList()
+        viewModel.fetchSportsList(sportsEntityList.isEmpty())
 
         /**
          * THEN
@@ -139,7 +139,7 @@ class SportsViewModelTest {
         viewModel.sportsList.observeForever {
             assert(it != null)
         }
-        viewModel.fetchSportsList()
+        viewModel.fetchSportsList(sportsEntityList.isEmpty())
 
         viewModel.checkCollapsedProperty(true, 0)
 
@@ -168,7 +168,7 @@ class SportsViewModelTest {
         viewModel.sportsList.observeForever {
             assert(it != null)
         }
-        viewModel.fetchSportsList()
+        viewModel.fetchSportsList(sportsEntityList.isEmpty())
 
         viewModel.checkCollapsedProperty(false, 0)
 
@@ -197,7 +197,7 @@ class SportsViewModelTest {
         viewModel.sportsList.observeForever {
             assert(it != null)
         }
-        viewModel.fetchSportsList()
+        viewModel.fetchSportsList(sportsEntityList.isEmpty())
 
         viewModel.checkFavoriteProperty(true, dummyEvent)
 
@@ -226,7 +226,7 @@ class SportsViewModelTest {
         viewModel.sportsList.observeForever {
             assert(it != null)
         }
-        viewModel.fetchSportsList()
+        viewModel.fetchSportsList(sportsEntityList.isEmpty())
 
         viewModel.checkFavoriteProperty(false, dummyEvent)
 

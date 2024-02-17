@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -61,15 +62,7 @@ class SportsFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 sportsViewModel.sportsList.collectLatest { sportsList ->
-                    if (sportsList.isNotEmpty()) {
-                        adapter.submitList(sportsList.map { it.copy() })
-                        binding.errorTxtV.visibility = View.GONE
-                        binding.sportsRV.visibility = View.VISIBLE
-                    } else {
-                        binding.errorTxtV.visibility = View.VISIBLE
-                        binding.sportsRV.visibility = View.GONE
-                    }
-
+                    adapter.submitList(sportsList)
                 }
             }
         }
@@ -78,6 +71,15 @@ class SportsFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 sportsViewModel.loader.collectLatest { state ->
                     binding.progressView.visibility = View.VISIBLE.takeIf { state } ?: View.GONE
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                sportsViewModel.showError.collectLatest { state ->
+                    binding.errorTxtV.isVisible = state
+                    binding.sportsRV.isVisible = !state
                 }
             }
         }
